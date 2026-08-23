@@ -1,0 +1,291 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────
+   KneeSight AI — Global Design System CSS
+   70% clinical workstation · 20% AI technology
+   10% premium visual design
+───────────────────────────────────────────── */
+
+@layer base {
+  /* ── CSS Custom Properties (Design Tokens) ── */
+  :root {
+    /* Colors */
+    --color-navy:       #0B132B;
+    --color-teal:       #2EC4B6;
+    --color-coral:      #FF6B5E;
+    --color-bg:         #F7F9FC;
+    --color-surface:    #FFFFFF;
+    --color-surface-2:  #EEF2F8;
+    --color-border:     #D0D8E8;
+    --color-border-2:   #E4E9F2;
+    --color-text-1:     #0B132B;
+    --color-text-2:     #4A5A7A;
+    --color-text-3:     #7A8DAD;
+    --color-text-4:     #A0AFCC;
+
+    /* Shadows */
+    --shadow-e1:  0 2px 8px rgba(11,19,43,0.06);
+    --shadow-e2:  0 8px 24px rgba(11,19,43,0.10);
+    --shadow-e3:  0 20px 50px rgba(11,19,43,0.18);
+
+    /* Motion */
+    --ease-ds: cubic-bezier(.2,.8,.2,1);
+    --duration-interaction: 180ms;
+    --duration-panel: 240ms;
+    --duration-modal: 220ms;
+    --duration-page: 320ms;
+
+    /* Z-index scale */
+    --z-dropdown: 100;
+    --z-drawer:   200;
+    --z-modal:    300;
+    --z-toast:    400;
+    --z-tooltip:  500;
+  }
+
+  .dark {
+    --color-bg:         #090F20;
+    --color-surface:    #0D1526;
+    --color-surface-2:  #111E35;
+    --color-border:     #1E2D4A;
+    --color-border-2:   #243355;
+    --color-text-1:     #EDF1F8;
+    --color-text-2:     #8FA3C5;
+    --color-text-3:     #5A7099;
+    --color-text-4:     #3A5070;
+
+    --shadow-e1:  0 2px 8px rgba(0,0,0,0.20);
+    --shadow-e2:  0 8px 24px rgba(0,0,0,0.35);
+    --shadow-e3:  0 20px 50px rgba(0,0,0,0.50);
+  }
+
+  /* ── Base Resets ── */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text-1);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1rem;
+    line-height: 1.65;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+    transition: background-color var(--duration-panel) var(--ease-ds),
+                color var(--duration-panel) var(--ease-ds);
+  }
+
+  /* Typography defaults */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: -0.015em;
+  }
+
+  /* Monospace data */
+  .font-data, code, pre, kbd {
+    font-family: 'IBM Plex Mono', 'Fira Code', monospace;
+  }
+
+  /* Focus visible global */
+  :focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: rgba(46, 196, 182, 0.20);
+    color: var(--color-text-1);
+  }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-4);
+}
+
+/* ── Design System Utilities ── */
+@layer utilities {
+  /* Surface tokens */
+  .bg-ds-bg       { background-color: var(--color-bg); }
+  .bg-ds-surface  { background-color: var(--color-surface); }
+  .bg-ds-surface-2 { background-color: var(--color-surface-2); }
+  .border-ds      { border-color: var(--color-border); }
+  .border-ds-2    { border-color: var(--color-border-2); }
+
+  /* Text tokens */
+  .text-ds-1 { color: var(--color-text-1); }
+  .text-ds-2 { color: var(--color-text-2); }
+  .text-ds-3 { color: var(--color-text-3); }
+  .text-ds-4 { color: var(--color-text-4); }
+
+  /* Shadow tokens */
+  .shadow-ds-e1 { box-shadow: var(--shadow-e1); }
+  .shadow-ds-e2 { box-shadow: var(--shadow-e2); }
+  .shadow-ds-e3 { box-shadow: var(--shadow-e3); }
+
+  /* Transition helper */
+  .transition-ds {
+    transition-timing-function: var(--ease-ds);
+    transition-duration: var(--duration-interaction);
+  }
+  .transition-ds-panel {
+    transition-timing-function: var(--ease-ds);
+    transition-duration: var(--duration-panel);
+  }
+
+  /* Medical grid — very subtle */
+  .bg-medical-grid {
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(to right, rgba(11,19,43,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(11,19,43,0.04) 1px, transparent 1px);
+  }
+  .dark .bg-medical-grid {
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+  }
+
+  /* Teal hairline accent (top border for cards/panels) */
+  .teal-accent-top {
+    border-top: 2px solid var(--color-teal);
+  }
+
+  /* Subtle teal left rule — AI result indicator */
+  .teal-rule-left {
+    border-left: 3px solid var(--color-teal);
+    padding-left: 12px;
+  }
+
+  /* Coral rule — warning/critical */
+  .coral-rule-left {
+    border-left: 3px solid var(--color-coral);
+    padding-left: 12px;
+  }
+
+  /* Monospaced data style */
+  .data-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  /* Visually hide but keep accessible */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* ── Component Layer ── */
+@layer components {
+  /* Divider with label */
+  .ds-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--color-text-4);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .ds-divider::before,
+  .ds-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: var(--color-border);
+  }
+
+  /* Status dot */
+  .status-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+  .status-dot-teal  { background-color: var(--color-teal); }
+  .status-dot-coral { background-color: var(--color-coral); }
+  .status-dot-amber { background-color: #F59E0B; }
+  .status-dot-green { background-color: #22C55E; }
+  .status-dot-slate { background-color: #94A3B8; }
+
+  /* Page content wrapper */
+  .page-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  @media (max-width: 640px) {
+    .page-content {
+      padding: 16px 12px;
+    }
+  }
+
+  /* Skip Link */
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 16px;
+    background-color: var(--color-teal);
+    color: #0B132B;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 6px;
+    z-index: 9999;
+    text-decoration: none;
+    transition: top 0.15s ease-out;
+  }
+  .skip-link:focus {
+    top: 16px;
+    outline: 3px solid #0B132B;
+  }
+}
+
+/* ── PREFERS-REDUCED-MOTION SUPPORT ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-spin,
+  .animate-ping,
+  .animate-pulse,
+  .animate-bounce {
+    animation: none !important;
+  }
+}
